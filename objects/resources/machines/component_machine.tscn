@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://dgnfw0di074cy"]
+
+[ext_resource type="Texture2D" uid="uid://dn50irgdcdhei" path="res://Art/Assets/indoor/maszyna.png" id="1_n7175"]
+[ext_resource type="Script" path="res://objects/resources/machines/component_machine_interaction_area.gd" id="2_0txo4"]
+[ext_resource type="Resource" uid="uid://78hxtu2xkf4q" path="res://data/player_1_data.tres" id="3_t0cak"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pw1ou"]
+size = Vector2(14, 22)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ibcjk"]
+radius = 21.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_84ghy"]
+font_size = 3
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="component_machine" type="StaticBody2D"]
+position = Vector2(-81, 42)
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("1_n7175")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, -3)
+shape = SubResource("RectangleShape2D_pw1ou")
+
+[node name="component_machine_interaction_area" type="Area2D" parent="."]
+script = ExtResource("2_0txo4")
+player_data = ExtResource("3_t0cak")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="component_machine_interaction_area"]
+position = Vector2(3, -3)
+shape = SubResource("CircleShape2D_ibcjk")
+
+[node name="Label" type="Label" parent="component_machine_interaction_area"]
+offset_left = -6.0
+offset_top = -27.0
+offset_right = 21.0
+offset_bottom = -20.0
+text = "[E] to interact"
+label_settings = SubResource("LabelSettings_84ghy")
+
+[connection signal="area_entered" from="component_machine_interaction_area" to="component_machine_interaction_area" method="_on_area_entered"]
+[connection signal="area_exited" from="component_machine_interaction_area" to="component_machine_interaction_area" method="_on_area_exited"]
